@@ -11,11 +11,22 @@ function DependrixNpm (providers) {
         {
           [packageLock.name]: {
             version: packageLock.version,
-            dependencies: []
+            dependencies: flattenDependencies(packageLock.dependencies || {})
           }
         }
       )
     }), { projects: {} }))
+}
+
+function flattenDependencies (dependencies) {
+  return Object.keys(dependencies).map(dependencyId => {
+    const dependency = dependencies[dependencyId]
+    return {
+      id: dependencyId,
+      version: dependency.version,
+      scope: dependency.dev ? 'dev' : ''
+    }
+  })
 }
 
 module.exports = DependrixNpm

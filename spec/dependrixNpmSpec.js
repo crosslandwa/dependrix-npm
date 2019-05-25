@@ -20,6 +20,39 @@ describe('dependrix-npm', () => {
       }))
       .then(done, done.fail)
   })
+
+  it('parses the name, version and each dependency, and whether it is a dev dependency or not', done => {
+    DependrixNpm([
+      asFunctionThatReturnsPromise({
+        name: 'project-a',
+        version: '1.0.0',
+        dependencies: {
+          'lib-a': { version: '3.0.0', dev: false },
+          'lib-b': { version: '4.0.0', dev: true }
+        }
+      })
+    ])
+      .then(expectReturnedObjectToEqual({
+        projects: {
+          'project-a': {
+            version: '1.0.0',
+            dependencies: [
+              {
+                id: 'lib-a',
+                version: '3.0.0',
+                scope: ''
+              },
+              {
+                id: 'lib-b',
+                version: '4.0.0',
+                scope: 'dev'
+              }
+            ]
+          }
+        }
+      }))
+      .then(done, done.fail)
+  })
 })
 
 function asFunctionThatReturnsPromise (content) {
