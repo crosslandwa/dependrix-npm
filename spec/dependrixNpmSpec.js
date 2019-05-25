@@ -53,6 +53,44 @@ describe('dependrix-npm', () => {
       }))
       .then(done, done.fail)
   })
+
+  it('parses nested dependencies', done => {
+    DependrixNpm([
+      asFunctionThatReturnsPromise({
+        name: 'project-a',
+        version: '1.0.0',
+        dependencies: {
+          'top-level-lib': {
+            version: '3.0.0',
+            dev: false,
+            dependencies: {
+              'nested-lib': { version: '4.0.0' }
+            }
+          }
+        }
+      })
+    ])
+      .then(expectReturnedObjectToEqual({
+        projects: {
+          'project-a': {
+            version: '1.0.0',
+            dependencies: [
+              {
+                id: 'top-level-lib',
+                version: '3.0.0',
+                scope: ''
+              },
+              {
+                id: 'nested-lib',
+                version: '4.0.0',
+                scope: ''
+              }
+            ]
+          }
+        }
+      }))
+      .then(done, done.fail)
+  })
 })
 
 function asFunctionThatReturnsPromise (content) {

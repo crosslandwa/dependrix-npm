@@ -19,14 +19,23 @@ function DependrixNpm (providers) {
 }
 
 function flattenDependencies (dependencies) {
-  return Object.keys(dependencies).map(dependencyId => {
+  const flat = []
+
+  Object.keys(dependencies).forEach(dependencyId => {
     const dependency = dependencies[dependencyId]
-    return {
-      id: dependencyId,
-      version: dependency.version,
-      scope: dependency.dev ? 'dev' : ''
+    flat.push(model(dependencyId, dependency))
+    if (dependency.dependencies) {
+      flat.push(...flattenDependencies(dependency.dependencies))
     }
   })
+
+  return flat
 }
+
+const model = (id, dependency) => ({
+  id,
+  version: dependency.version,
+  scope: dependency.dev ? 'dev' : ''
+})
 
 module.exports = DependrixNpm

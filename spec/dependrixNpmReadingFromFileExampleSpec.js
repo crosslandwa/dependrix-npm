@@ -23,6 +23,16 @@ describe('dependrix-npm', () => {
                 id: 'eslint-import-resolver-node',
                 version: '0.3.2',
                 scope: 'dev'
+              },
+              {
+                id: 'debug',
+                version: '2.6.9',
+                scope: 'dev'
+              },
+              {
+                id: 'ms',
+                version: '2.0.0',
+                scope: 'dev'
               }
             ]
           }
