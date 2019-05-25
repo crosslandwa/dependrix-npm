@@ -1,4 +1,4 @@
-# dependrix-maven
-Process maven dependency trees into JSON for consumption by `dependrix-visualisation`
+# dependrix-npm
+Process npm `package-lock.json` files into JSON for consumption by `dependrix-visualisation`
 
-See `spec/dependrixMavenReadingFromFileExampleSpec.js` for an example
+See `spec/dependrixNpmReadingFromFileExampleSpec.js` for an example
