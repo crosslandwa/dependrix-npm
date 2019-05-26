@@ -18,14 +18,18 @@ function DependrixNpm (providers) {
     }), { projects: {} }))
 }
 
-function flattenDependencies (dependencies) {
+function flattenDependencies (dependencies, found = {}) {
   const flat = []
 
   Object.keys(dependencies).forEach(dependencyId => {
     const dependency = dependencies[dependencyId]
-    flat.push(model(dependencyId, dependency))
+    const key = `${dependencyId}-${dependency.version}`
+    if (!found[key]) {
+      found[key] = true
+      flat.push(model(dependencyId, dependency))
+    }
     if (dependency.dependencies) {
-      flat.push(...flattenDependencies(dependency.dependencies))
+      flat.push(...flattenDependencies(dependency.dependencies, found))
     }
   })
 

@@ -91,6 +91,54 @@ describe('dependrix-npm', () => {
       }))
       .then(done, done.fail)
   })
+
+  it('uniquely identifies multiple versions of the same dependency', done => {
+    DependrixNpm([
+      asFunctionThatReturnsPromise({
+        name: 'project-a',
+        version: '1.0.0',
+        dependencies: {
+          'lib-a': {
+            version: '1.0.0',
+            dependencies: {
+              'lib-b': { version: '1.0.0' }
+            }
+          },
+          'lib-b': {
+            version: '2.0.0',
+            dependencies: {
+              'lib-a': { version: '1.0.0' }
+            }
+          }
+        }
+      })
+    ])
+      .then(expectReturnedObjectToEqual({
+        projects: {
+          'project-a': {
+            version: '1.0.0',
+            dependencies: [
+              {
+                id: 'lib-a',
+                version: '1.0.0',
+                scope: ''
+              },
+              {
+                id: 'lib-b',
+                version: '1.0.0',
+                scope: ''
+              },
+              {
+                id: 'lib-b',
+                version: '2.0.0',
+                scope: ''
+              }
+            ]
+          }
+        }
+      }))
+      .then(done, done.fail)
+  })
 })
 
 function asFunctionThatReturnsPromise (content) {
