@@ -39,7 +39,7 @@ function flattenDependencies (dependencies, found = {}) {
 const model = (id, dependency) => ({
   id,
   version: dependency.version,
-  scope: dependency.dev ? 'dev' : ''
+  scope: dependency.dev ? 'dev' : 'production'
 })
 
 module.exports = DependrixNpm

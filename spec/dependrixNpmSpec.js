@@ -40,7 +40,7 @@ describe('dependrix-npm', () => {
               {
                 id: 'lib-a',
                 version: '3.0.0',
-                scope: ''
+                scope: 'production'
               },
               {
                 id: 'lib-b',
@@ -78,12 +78,12 @@ describe('dependrix-npm', () => {
               {
                 id: 'top-level-lib',
                 version: '3.0.0',
-                scope: ''
+                scope: 'production'
               },
               {
                 id: 'nested-lib',
                 version: '4.0.0',
-                scope: ''
+                scope: 'production'
               }
             ]
           }
@@ -121,17 +121,17 @@ describe('dependrix-npm', () => {
               {
                 id: 'lib-a',
                 version: '1.0.0',
-                scope: ''
+                scope: 'production'
               },
               {
                 id: 'lib-b',
                 version: '1.0.0',
-                scope: ''
+                scope: 'production'
               },
               {
                 id: 'lib-b',
                 version: '2.0.0',
-                scope: ''
+                scope: 'production'
               }
             ]
           }
